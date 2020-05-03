@@ -26,6 +26,7 @@ def item_acquirer(item_ids, ready, flag, loop, threadnumber):
             item_name = ''
             item_type = ''
             item_icon = ''
+            item_level = 80
             details_type = ''
             details_description = ''
             details_duration_ms = 0
@@ -39,6 +40,8 @@ def item_acquirer(item_ids, ready, flag, loop, threadnumber):
                 item_type = item['type']
             if 'icon' in item:
                 item_icon = item['icon']
+            if 'level' in item:
+                item_level = item['level']
             if 'details' in item:
                 d = item['details']
                 if 'type' in d:
@@ -50,14 +53,14 @@ def item_acquirer(item_ids, ready, flag, loop, threadnumber):
                 if 'apply_count' in d:
                     details_apply_count = d['apply_count']
 
-            items_tuples.append((item_id, item_name, item_type, item_icon))
+            items_tuples.append((item_id, item_type, item_icon))
             if (item_type == 'Consumable' and (details_type == 'Food' or details_type == 'Utility')):
-                consumables_tuples.append((item_id, item_name, details_type, details_description, details_duration_ms, details_apply_count))
+                consumables_tuples.append((item_id, item_name, details_type, details_description, details_duration_ms, details_apply_count, item_level))
 
         with con:
             c = con.cursor()
-            c.executemany('insert into items values (?, ?, ?, ?)', items_tuples)
-            c.executemany('insert into consumables values (?, ?, ?, ?, ?, ?)', consumables_tuples)
+            c.executemany('insert into items values (?, ?, ?)', items_tuples)
+            c.executemany('insert into consumables values (?, ?, ?, ?, ?, ?, ?)', consumables_tuples)
 
         if len(consumables_tuples) > 0:
             print(f'[{loop}:{threadnumber}] Got {len(consumables_tuples)} consumables.')
