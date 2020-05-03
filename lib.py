@@ -5,7 +5,7 @@ from socket import timeout
 from json import load, loads, JSONDecodeError
 from http.client import IncompleteRead
 
-VERSION = '0.8.2'
+VERSION = '1.0.0'
 REFRESH = False
 
 STAT_NAMES = [
