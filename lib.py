@@ -31,7 +31,7 @@ STAT_LOOKUP = [
     ' Concentration',
     ' Condition Damage',
     ' Expertise',
-    ' Healing Power',
+    ' Healing',
     '% Magic Find',
     '% All Experience Gained',
     '% Experience from kills)'
